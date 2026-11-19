@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Indice Attori</title>
+    <title>Actors Index</title>
 </head>
 <body>
 
@@ -17,7 +17,7 @@
     #ab-title { font-size: 2.6em; font-weight: bold; display: block; margin-bottom: 16px; }
     #ab-version { font-size: 0.38em; opacity: 0.5; margin-left: 8px; vertical-align: middle; }
 
-    /* Riga ricerca + paginazione */
+    /* Search row + pagination */
     #ab-search-row {
         display: flex; align-items: center; justify-content: center;
         gap: 10px; max-width: 820px; margin: 0 auto;
@@ -29,7 +29,7 @@
     }
     #ab-search:focus { outline: 2px solid #0097e6; border-color: #0097e6; }
 
-    /* Paginazione */
+    /* Pagination */
     #ab-pager { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
     .ab-pg-btn {
         padding: 8px 12px; border-radius: 4px; cursor: pointer;
@@ -40,17 +40,17 @@
     .ab-pg-btn:hover:not(:disabled) { background: #383838; }
     #ab-pg-info { color: #aaa; font-size: 0.9em; min-width: 52px; text-align: center; white-space: nowrap; }
 
-    /* Status (dentro header sticky) */
+    /* Status (inside the sticky header) */
     #ab-status { padding: 4px 16px; color: #aaa; font-size: 0.88em; text-align: center; margin-top: 6px; }
 
-    /* Sort buttons — riga orizzontale dentro header sticky */
+    /* Sort buttons - horizontal row inside the sticky header */
     #ab-sort-wrap { display: flex; flex-direction: row; justify-content: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
     .ab-sort-btn { padding: 8px 20px; border-radius: 4px; cursor: pointer; background: #2a2a2a; border: 1px solid #555; color: #ccc; font-size: 0.95em; white-space: nowrap; }
     .ab-sort-btn.active { background: #0097e6; border-color: #0097e6; color: #fff; }
     .ab-sort-btn:hover:not(.active) { background: #383838; }
 
-    /* Griglia - esattamente 7 colonne */
-    #ab-grid { padding: 14px 16px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 240px; /* fallback, sovrascritto da JS */ }
+    /* Grid - exactly 7 columns */
+    #ab-grid { padding: 14px 16px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 240px; /* fallback, overridden by JS */ }
     .ab-card { background: #1c1c1c; border-radius: 6px; overflow: hidden; cursor: pointer; border: 2px solid transparent; outline: none; }
     .ab-card:hover, .ab-card:focus { border-color: #0097e6; }
     .ab-card-img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; background: #2a2a2a; }
@@ -78,30 +78,30 @@
 </style>
 
     <div id="ab-header">
-        <span id="ab-title">&#127914; Indice Attori<span id="ab-version">(v.27)</span></span>
+        <span id="ab-title">&#127914; Actors Index<span id="ab-version">(v.27)</span></span>
         <div id="ab-search-row">
-            <input type="text" id="ab-search" placeholder="Cerca attore&#8230;" autocomplete="off" />
+            <input type="text" id="ab-search" placeholder="Search actor&#8230;" autocomplete="off" />
             <div id="ab-pager">
-                <button class="ab-pg-btn" id="ab-pg-first" title="Prima pagina">|&#8249;</button>
-                <button class="ab-pg-btn" id="ab-pg-prev"  title="Precedente">&#8249;</button>
+                <button class="ab-pg-btn" id="ab-pg-first" title="First page">|&#8249;</button>
+                <button class="ab-pg-btn" id="ab-pg-prev"  title="Previous">&#8249;</button>
                 <span id="ab-pg-info">&#8211;</span>
-                <button class="ab-pg-btn" id="ab-pg-next"  title="Successiva">&#8250;</button>
-                <button class="ab-pg-btn" id="ab-pg-last"  title="Ultima pagina">&#8250;|</button>
+                <button class="ab-pg-btn" id="ab-pg-next"  title="Next">&#8250;</button>
+                <button class="ab-pg-btn" id="ab-pg-last"  title="Last page">&#8250;|</button>
             </div>
         </div>
         <div id="ab-sort-wrap">
-            <button class="ab-sort-btn" id="ab-settings-link">&#9881; Impostazioni</button>
-            <button class="ab-sort-btn active" id="ab-sort-app">Apparizioni &#8595;</button>
-            <button class="ab-sort-btn" id="ab-sort-name">Nome A&#8594;Z</button>
+            <button class="ab-sort-btn" id="ab-settings-link">&#9881; Settings</button>
+            <button class="ab-sort-btn active" id="ab-sort-app">Appearances &#8595;</button>
+            <button class="ab-sort-btn" id="ab-sort-name">Name A&#8594;Z</button>
         </div>
-        <div id="ab-status">In attesa&#8230;</div>
+        <div id="ab-status">Waiting&#8230;</div>
     </div>
 
     <div id="ab-grid"></div>
 
     <div id="ab-overlay" role="dialog" aria-modal="true" aria-labelledby="ab-modal-name">
         <div id="ab-modal">
-            <button id="ab-modal-close" aria-label="Chiudi">&#10005;</button>
+            <button id="ab-modal-close" aria-label="Close">&#10005;</button>
             <div id="ab-modal-header">
                 <img id="ab-modal-img" alt="" />
                 <div><h2 id="ab-modal-name"></h2><div id="ab-modal-count"></div></div>
@@ -138,7 +138,7 @@
             card.innerHTML =
                 (url ? '<img class="ab-card-img" src="'+esc(url)+'" loading="lazy" alt="">' : '<div class="ab-card-placeholder">&#128100;</div>') +
                 '<div class="ab-card-info"><div class="ab-card-name">'+esc(actor.name)+'</div>' +
-                '<div class="ab-card-count">'+actor.appearances+' titol'+(actor.appearances===1?'o':'i')+'</div></div>';
+                '<div class="ab-card-count">'+actor.appearances+' title'+(actor.appearances===1?'':'s')+'</div></div>';
             card.addEventListener('click', function(){openActor(actor);});
             card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();openActor(actor);} });
             return card;
@@ -160,9 +160,9 @@
             document.getElementById('ab-pg-last').disabled  = (currentPage >= totalPages - 1);
             var from = total === 0 ? 0 : currentPage * PAGE_SIZE + 1;
             var to   = Math.min((currentPage+1) * PAGE_SIZE, total);
-            var txt  = total === 0 ? 'Nessun risultato.' :
-                'Attori '+from+'\u2013'+to+' di '+total+
-                (total < allActors.length ? ' (filtrati su '+allActors.length+' totali)' : '')+'.';
+            var txt  = total === 0 ? 'No results.' :
+                'Actors '+from+'\u2013'+to+' of '+total+
+                (total < allActors.length ? ' (filtered from '+allActors.length+' total)' : '')+'.';
             document.getElementById('ab-status').textContent = txt;
         }
         function scrollToTop() {
@@ -195,7 +195,7 @@
         }
         function openModal(actor) {
             document.getElementById('ab-modal-name').textContent=actor.name;
-            document.getElementById('ab-modal-count').textContent=actor.appearances+' apparizione'+(actor.appearances===1?'':'i');
+            document.getElementById('ab-modal-count').textContent=actor.appearances+' appearance'+(actor.appearances===1?'':'s');
             var img=document.getElementById('ab-modal-img'), url=personImgUrl(actor.personId);
             img.style.display=url?'':'none'; if(url){img.src=url;}
             var list=document.getElementById('ab-modal-list'); list.innerHTML='';
@@ -250,16 +250,16 @@
             window.addEventListener('resize', setGridOffset);
 
             var statusEl = document.getElementById('ab-status');
-            statusEl.textContent = 'Caricamento\u2026';
+            statusEl.textContent = 'Loading\u2026';
             var url = ApiClient.getUrl('ActorsIndex/actors-index');
             fetch(url, { headers: { 'X-Emby-Authorization': 'MediaBrowser Token="'+ApiClient.accessToken()+'"' } })
                 .then(function(r){ if(!r.ok){throw new Error('HTTP '+r.status);} return r.json(); })
                 .then(function(result){
                     allActors=(result&&result.actors)||[];
-                    if(allActors.length===0){ statusEl.textContent='Nessun attore trovato.'; } else { refresh(); }
+                    if(allActors.length===0){ statusEl.textContent='No actors found.'; } else { refresh(); }
                     setGridOffset();
                 })
-                ['catch'](function(err){ statusEl.textContent='Errore: '+err; });
+                ['catch'](function(err){ statusEl.textContent='Error: '+err; });
         }
 
         $('#ab-page').on('pageshow', init);

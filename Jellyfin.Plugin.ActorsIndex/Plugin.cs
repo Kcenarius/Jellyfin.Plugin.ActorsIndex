@@ -44,7 +44,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
             new PluginPageInfo
             {
                 Name = Name,
-                DisplayName = "Actors Index - Impostazioni",
+                DisplayName = "Actors Index - Settings",
                 EmbeddedResourcePath = string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}.Configuration.configPage.html",
@@ -53,7 +53,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
             new PluginPageInfo
             {
                 Name = "ActorsBrowse",
-                DisplayName = "Indice Attori",
+                DisplayName = "Actors Index",
                 EnableInMainMenu = true,
                 MenuSection = "library",
                 MenuIcon = "people",

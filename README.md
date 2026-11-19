@@ -1,114 +1,131 @@
-# Actors Index — Plugin per Jellyfin
+# Actors Index — Jellyfin Plugin
 
-Sfoglia tutti gli attori della tua libreria Jellyfin in un'unica schermata: griglia completa con foto, numero di apparizioni e collegamento diretto alla loro biografia.
+> **Note:** this plugin originally shipped with an Italian interface. Its UI text (settings page, actors page, channel and catalog metadata) has been translated to English in a quick AI pass, so a few strings may still be polished later. The behaviour is unchanged.
+
+Browse every actor in your Jellyfin library on one screen: a full photo grid with appearance counts and a direct link to each actor's biography.
 
 ![Actors Index screenshot](Jellyfin.Plugin.ActorsIndex/Images/thumb.png)
 
-## Funzionalità
+## About this fork
 
-- **Griglia attori** — tutti gli attori/attrici ordinabili per numero di apparizioni o nome A→Z
-- **Ricerca in tempo reale** — filtra per nome mentre scrivi
-- **Paginazione** — dimensione pagina configurabile (default 60 attori per pagina)
-- **Pulsante flottante** — aggiungi un pulsante 🎬 persistente su tutte le pagine Jellyfin
-- **Integrazione canale** — attori accessibili come canale Jellyfin nella home
-- **Filtro per apparizioni** — nascondi attori con meno di N apparizioni
-- **Aggiornamento automatico** — si aggiorna da solo dalla pagina impostazioni, senza compilazione manuale
+This repository is a continuation of [cocomeros/Jellyfin.Plugin.ActorsIndex](https://github.com/cocomeros/Jellyfin.Plugin.ActorsIndex), published by **Kcenarius**.
 
-## Requisiti
+- **Same plugin ID** (`17d0c3ac-c0d1-48d7-ba4e-57cb9dac7fa2`): for Jellyfin it is the same plugin, so existing installs upgrade in place, keep their settings (`plugins/configurations/Jellyfin.Plugin.ActorsIndex.xml`) and keep their channel and menu entries.
+- **Enable only one repository** — this one *or* the original. Jellyfin merges versions of a plugin ID across repositories and installs whichever version number is higher, so pointing at both can hand an installation back to the original build.
+- **Versioning** — the fork starts at `1.1.0.0` while the original is on `1.0.0.x`; the auto-release workflow bumps the last component, so fork builds keep outranking the original until it moves to a higher minor version.
+- Original work © cocomeros, GPL-3.0 — see [LICENSE](LICENSE).
 
-- Jellyfin **10.11.x** o successivo
-- .NET 9 (incluso in Jellyfin 10.11+)
+## Features
 
-## Installazione
+- **Actor grid** — every actor/actress, sortable by appearance count or name A→Z
+- **Live search** — filter by name as you type
+- **Pagination** — configurable page size (default: 60 actors per page)
+- **Floating button** — add a persistent 🏐 button to every Jellyfin page
+- **Channel integration** — actors available as a Jellyfin channel on the home screen
+- **Appearance filter** — hide actors with fewer than N appearances
+- **Self-update** — updates itself from the settings page, no manual builds
 
-### Metodo A — Repository personalizzato (consigliato)
+## Requirements
 
-1. In Jellyfin vai su **Dashboard → Plugin → Repository**
-2. Clicca **+** e aggiungi:
-   - Nome: `Actors Index`
-   - URL: `https://raw.githubusercontent.com/cocomeros/Jellyfin.Plugin.ActorsIndex/main/manifest.json`
-3. Vai su **Dashboard → Plugin → Catalogo**, trova **Actors Index**, clicca **Installa**
-4. Riavvia Jellyfin
+- Jellyfin **10.11.x** or later
+- .NET 9 (bundled with Jellyfin 10.11+)
 
-### Metodo B — Installazione manuale
+## Installation
 
-1. Scarica l'ultimo `Jellyfin.Plugin.ActorsIndex_x.x.x.x.zip` dalla pagina [Releases](https://github.com/cocomeros/Jellyfin.Plugin.ActorsIndex/releases)
-2. Estrai e copia tutti i file nella cartella plugin di Jellyfin:
+### Method A — Custom repository (recommended)
+
+1. In Jellyfin go to **Dashboard → Plugins → Repositories**
+2. Click **+** and add:
+   - Name: `Actors Index`
+   - URL: `https://raw.githubusercontent.com/Kcenarius/Jellyfin.Plugin.ActorsIndex/main/manifest.json`
+3. Go to **Dashboard → Plugins → Catalog**, find **Actors Index**, click **Install**
+4. Restart Jellyfin
+
+### Method B — Manual install
+
+1. Download the latest `Jellyfin.Plugin.ActorsIndex_x.x.x.x.zip` from the [Releases](https://github.com/Kcenarius/Jellyfin.Plugin.ActorsIndex/releases) page
+2. Extract it and copy all files into Jellyfin's plugins folder:
    - **Linux**: `/var/lib/jellyfin/plugins/ActorsIndex/`
    - **Windows**: `%LOCALAPPDATA%\jellyfin\plugins\ActorsIndex\`
-3. Riavvia Jellyfin
+3. Restart Jellyfin
 
-## Configurazione iniziale
+## Initial setup
 
-Dopo aver installato e riavviato Jellyfin:
+After installing and restarting Jellyfin:
 
-1. Vai su **Dashboard → Plugin → Actors Index → Impostazioni**
-2. Nella sezione **"Pulsante nella Home"** clicca **🎬 Inietta pulsante nella Home**
-   — questo aggiunge un pulsante persistente su tutte le pagine Jellyfin
+1. Go to **Dashboard → Plugins → Actors Index → Settings**
+2. In the **"Home Button"** section click **🏐 Inject button into Home**
+   — this adds a persistent button to every Jellyfin page
 
-> **Solo Linux:** la funzione "Inietta" richiede il permesso di scrittura su `/usr/share/jellyfin/web/index.html`.
-> Per concederlo in modo permanente, esegui questo comando **una volta sola**:
+> **Linux only:** the "Inject" feature needs write access to `/usr/share/jellyfin/web/index.html`.
+> To grant it permanently, run this command **once**:
 > ```bash
 > sudo bash -c 'mkdir -p /etc/systemd/system/jellyfin.service.d && printf "[Service]\nExecStartPre=+/bin/chown jellyfin /usr/share/jellyfin/web/index.html\n" > /etc/systemd/system/jellyfin.service.d/fix-webroot-perms.conf && systemctl daemon-reload && systemctl restart jellyfin'
 > ```
-> Dopo un aggiornamento di Jellyfin, clicca di nuovo **"Inietta"** per ripristinare il pulsante.
+> After a Jellyfin update, click **"Inject"** again to restore the button.
 
 ---
 
-## Cosa fare dopo un aggiornamento di Jellyfin
+## What to do after a Jellyfin update
 
-### Il pulsante 🎬 è sparito dalla Home
+### The 🏐 button disappeared from the home page
 
-Jellyfin ha sovrascritto `index.html` durante l'aggiornamento.
+Jellyfin overwrote `index.html` during the update.
 
-**Soluzione:** Dashboard → Plugin → Actors Index → **"Inietta pulsante nella Home"**. Fine.
-
----
-
-### Errore rosso al click su "Inietta" (o "Rimuovi")
-
-Il plugin è compilato per la versione precedente di Jellyfin e non è più compatibile.
-
-**Soluzione in 4 click:**
-
-1. Dashboard → Plugin → Actors Index → **"Controlla aggiornamenti"**
-2. Se appare una versione più recente → clicca **"Scarica e installa aggiornamento"**
-3. Clicca **"Riavvia Jellyfin"**
-4. Clicca **"Inietta pulsante nella Home"**
-
-✅ Nessun terminale, nessuna compilazione.
+**Solution:** Dashboard → Plugins → Actors Index → **"Inject button into Home"**. Done.
 
 ---
 
-### Errore anche dopo l'aggiornamento del plugin (solo Linux)
+### Red error when clicking "Inject" (or "Remove")
 
-Dopo `apt upgrade jellyfin` su Debian/Ubuntu, `index.html` torna di proprietà di `root` e il plugin non ci può scrivere.
+The plugin was built for the previous Jellyfin version and is no longer compatible.
 
-**Soluzione:** riesegui il comando una-tantum indicato nella sezione "Configurazione iniziale" qui sopra. Va rifatto solo se disinstalli e reinstalli Jellyfin completamente.
+**Solution in 4 clicks:**
+
+1. Dashboard → Plugins → Actors Index → **"Check for updates"**
+2. If a newer version shows up → click **"Download and install update"**
+3. Click **"Restart Jellyfin"**
+4. Click **"Inject button into Home"**
+
+✅ No terminal, no builds.
 
 ---
 
-## Come funziona l'aggiornamento automatico
+### Still failing after updating the plugin (Linux only)
 
-Il plugin si aggiorna automaticamente senza che tu debba compilare nulla:
+After `apt upgrade jellyfin` on Debian/Ubuntu, `index.html` is owned by `root` again and the plugin cannot write to it.
 
-1. Quando Jellyfin pubblica una nuova versione, **Renovate** apre automaticamente una Pull Request su questo repository per aggiornare le dipendenze
-2. Alla chiusura della PR, **GitHub Actions** compila il plugin, crea uno ZIP firmato e pubblica una nuova [Release](https://github.com/cocomeros/Jellyfin.Plugin.ActorsIndex/releases)
-3. Tu clicchi **"Controlla aggiornamenti"** nelle impostazioni del plugin — fa tutto da solo
+**Solution:** re-run the one-time command from the "Initial setup" section above. It only has to be redone if you fully uninstall and reinstall Jellyfin.
 
-## Compilazione dal sorgente (solo sviluppatori)
+---
+
+## How auto-update works
+
+The plugin updates itself without you having to build anything:
+
+1. When Jellyfin publishes a new version, **Renovate** automatically opens a Pull Request on this repository to bump the dependencies
+2. When that PR is merged, **GitHub Actions** builds the plugin, packages a ZIP and publishes a new [Release](https://github.com/Kcenarius/Jellyfin.Plugin.ActorsIndex/releases)
+3. You click **"Check for updates"** in the plugin settings — it does the rest
+
+## Building from source (developers only)
 
 ```bash
-git clone https://github.com/cocomeros/Jellyfin.Plugin.ActorsIndex.git
+git clone https://github.com/Kcenarius/Jellyfin.Plugin.ActorsIndex.git
 cd Jellyfin.Plugin.ActorsIndex
 dotnet publish --configuration=Release Jellyfin.Plugin.ActorsIndex.sln
 ```
 
 Output: `Jellyfin.Plugin.ActorsIndex/bin/Release/net9.0/publish/`
 
-## Licenza
+## License
 
 [GPL-3.0](LICENSE)
+
+---
+
+## Appendix — Jellyfin plugin template notes
+
+The rest of this file is the untouched boilerplate shipped with the Jellyfin plugin template; it is not specific to Actors Index.
 
 This is the main class for your plugin and will reside in the root of your project. It will define your name, version and Id. It should inherit from `MediaBrowser.Common.Plugins.BasePlugin<PluginConfiguration>`
 

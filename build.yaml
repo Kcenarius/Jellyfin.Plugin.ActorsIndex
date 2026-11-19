@@ -11,7 +11,7 @@ description: >
   Features include real-time search, pagination, sort by appearances or name,
   a Jellyfin channel integration, and a floating home button injectable into the Jellyfin UI.
 category: "General"
-owner: "cocom"
+owner: "Kcenarius"
 artifacts:
 - "Jellyfin.Plugin.ActorsIndex.dll"
 - "meta.json"
