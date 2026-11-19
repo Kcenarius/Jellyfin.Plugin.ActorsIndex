@@ -7,6 +7,15 @@
     "description": "Scans your Jellyfin library and builds an index of every actor with a photo grid, search, pagination and an injectable Home button.",
     "overview": "Browse every actor in your library with their appearance count.",
     "owner": "Kcenarius",
-    "versions": []
+    "versions": [
+      {
+        "version": "1.1.0.1",
+        "changelog": "Auto-release: built for Jellyfin 10.11.8.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Kcenarius/Jellyfin.Plugin.ActorsIndex/releases/download/v1.1.0.1/Jellyfin.Plugin.ActorsIndex_1.1.0.1.zip",
+        "checksum": "d2c7bb67b35b63cb18dcb8471bb86d71",
+        "timestamp": "2026-11-19T16:46:49Z"
+      }
+    ]
   }
 ]
