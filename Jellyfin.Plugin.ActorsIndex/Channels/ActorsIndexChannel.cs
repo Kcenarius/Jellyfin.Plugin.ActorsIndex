@@ -23,6 +23,13 @@ namespace Jellyfin.Plugin.ActorsIndex.Channels;
 /// </summary>
 public class ActorsIndexChannel : IChannel, IHasCacheKey, IRequiresMediaInfoCallback
 {
+    /// <summary>
+    /// The display name of the channel. Jellyfin derives the internal channel ID from
+    /// "Channel " + Name (see ChannelManager.GetInternalChannelId), so changing it also
+    /// changes the ID under which the channel items are stored.
+    /// </summary>
+    public const string DisplayName = "Actors Index";
+
     private readonly ILibraryManager _libraryManager;
     private readonly ActorsIndexService _actorsService;
 
@@ -38,10 +45,10 @@ public class ActorsIndexChannel : IChannel, IHasCacheKey, IRequiresMediaInfoCall
     }
 
     /// <inheritdoc />
-    public string Name => "Indice Attori";
+    public string Name => DisplayName;
 
     /// <inheritdoc />
-    public string Description => "Naviga gli attori presenti nella tua libreria Jellyfin.";
+    public string Description => "Browse the actors in your Jellyfin library.";
 
     /// <inheritdoc />
     public string DataVersion => "15";

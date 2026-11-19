@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Jellyfin.Plugin.ActorsIndex.Channels;
 using Jellyfin.Plugin.ActorsIndex.Configuration;
 using Jellyfin.Plugin.ActorsIndex.Services;
 using MediaBrowser.Common.Configuration;
@@ -27,7 +28,7 @@ namespace Jellyfin.Plugin.ActorsIndex.Api;
 public class ActorsIndexController : ControllerBase
 {
     private const string InjectionTag = "\n    <!-- ActorsIndex --><script src=\"/ActorsIndex/ui-button.js\"></script><!-- /ActorsIndex -->";
-    private const string PluginManifestUrl = "https://raw.githubusercontent.com/cocomeros/Jellyfin.Plugin.ActorsIndex/main/manifest.json";
+    private const string PluginManifestUrl = "https://raw.githubusercontent.com/Kcenarius/Jellyfin.Plugin.ActorsIndex/main/manifest.json";
 
     private static readonly string[] WebRootCandidates =
     [
@@ -139,8 +140,9 @@ public class ActorsIndexController : ControllerBase
     [HttpPost("refresh-channel")]
     public ActionResult<object> RefreshChannel()
     {
-        // 1. Compute the channel internal ID
-        var channelId = _libraryManager.GetNewItemId("Channel Indice Attori", typeof(Channel));
+        // 1. Compute the channel internal ID. Jellyfin's ChannelManager.GetInternalChannelId
+        //    derives it from "Channel " + channel name, so the name must match ActorsIndexChannel.Name.
+        var channelId = _libraryManager.GetNewItemId("Channel " + ActorsIndexChannel.DisplayName, typeof(Channel));
 
         // 2. Delete ALL channel items from the DB so they are recreated fresh.
         //    ImageUrl is only written once (on first creation); deletion is the only way
@@ -198,18 +200,18 @@ public class ActorsIndexController : ControllerBase
             new
             {
                 category = "General",
-                description = "Scansiona la libreria Jellyfin e costruisce un indice di tutti gli attori con foto, ricerca e paginazione.",
+                description = "Scans your Jellyfin library and builds an index of every actor with photos, search and pagination.",
                 guid,
                 imageUrl = (string?)null,
                 name = "Actors Index",
-                overview = "Sfoglia tutti gli attori della tua libreria con conteggio apparizioni.",
-                owner = "cocom",
+                overview = "Browse every actor in your library with their appearance count.",
+                owner = "Kcenarius",
                 versions = new[]
                 {
                     new
                     {
                         checksum = (string?)null,
-                        changelog = "1.0.0 - Versione iniziale.",
+                        changelog = "Continuation of Actors Index with an English interface.",
                         targetAbi = "10.11.0.0",
                         sourceUrl = (string?)null,
                         timestamp = "2026-04-04T00:00:00Z",
@@ -248,7 +250,7 @@ public class ActorsIndexController : ControllerBase
         var indexPath = FindIndexHtml();
         if (indexPath is null)
         {
-            return NotFound(new { error = "index.html non trovato. Cercato in: " + string.Join(", ", WebRootCandidates) });
+            return NotFound(new { error = "index.html not found. Looked in: " + string.Join(", ", WebRootCandidates) });
         }
 
         var html = System.IO.File.ReadAllText(indexPath);
@@ -260,7 +262,7 @@ public class ActorsIndexController : ControllerBase
         var patched = html.Replace("</body>", InjectionTag + "\n</body>", StringComparison.Ordinal);
         if (string.Equals(patched, html, StringComparison.Ordinal))
         {
-            return StatusCode(500, new { error = "Tag </body> non trovato in index.html" });
+            return StatusCode(500, new { error = "</body> tag not found in index.html" });
         }
 
         System.IO.File.WriteAllText(indexPath, patched);
@@ -277,7 +279,7 @@ public class ActorsIndexController : ControllerBase
         var indexPath = FindIndexHtml();
         if (indexPath is null)
         {
-            return NotFound(new { error = "index.html non trovato" });
+            return NotFound(new { error = "index.html not found" });
         }
 
         var html = System.IO.File.ReadAllText(indexPath);
@@ -320,7 +322,7 @@ public class ActorsIndexController : ControllerBase
     if(document.getElementById(ID)){sync();return;}
     var b=document.createElement('button');
     b.id=ID;
-    b.title='Indice Attori';
+    b.title='Actors Index';
     b.innerHTML='&#127914;';
     b.style.cssText='position:fixed;bottom:28px;right:28px;width:56px;height:56px;border-radius:50%;background:#0097e6;border:none;color:#fff;font-size:1.5em;cursor:pointer;z-index:9999;box-shadow:0 4px 18px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;';
     b.addEventListener('click',nav);
@@ -455,7 +457,7 @@ public class ActorsIndexController : ControllerBase
 
             if (string.IsNullOrEmpty(sourceUrl))
             {
-                return StatusCode(500, new { error = "sourceUrl non presente nel manifest GitHub." });
+                return StatusCode(500, new { error = "sourceUrl missing from the GitHub manifest." });
             }
 
             // 2. Download ZIP
@@ -469,7 +471,7 @@ public class ActorsIndexController : ControllerBase
                 var hash = Convert.ToHexString(MD5.HashData(zipBytes)).ToLowerInvariant();
                 if (!string.Equals(hash, checksum, StringComparison.OrdinalIgnoreCase))
                 {
-                    return StatusCode(500, new { error = $"Checksum MD5 non valido. Atteso: {checksum}, calcolato: {hash}" });
+                    return StatusCode(500, new { error = $"Invalid MD5 checksum. Expected: {checksum}, computed: {hash}" });
                 }
             }
 #pragma warning restore CA5351

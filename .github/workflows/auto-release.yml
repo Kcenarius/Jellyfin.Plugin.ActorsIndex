@@ -100,7 +100,7 @@ jobs:
           with open('Jellyfin.Plugin.ActorsIndex/meta.json') as f:
               data = json.load(f)
           data['version']   = '$PVER'
-          data['changelog'] = 'Auto-release: compilato per Jellyfin $JVER'
+          data['changelog'] = 'Auto-release: built for Jellyfin $JVER'
           from datetime import datetime, timezone
           data['timestamp'] = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
           with open('Jellyfin.Plugin.ActorsIndex/meta.json', 'w') as f:
@@ -151,7 +151,7 @@ jobs:
 
           new_entry = {
               "version":    '$PVER',
-              "changelog":  'Auto-release: compilato per Jellyfin $JVER.',
+              "changelog":  'Auto-release: built for Jellyfin $JVER.',
               "targetAbi":  target_abi,
               "sourceUrl":  '$SOURCE_URL',
               "checksum":   '$MD5',
@@ -161,7 +161,7 @@ jobs:
 
           with open('manifest.json', 'w') as f:
               json.dump(data, f, indent=2, ensure_ascii=False)
-          print(f"manifest.json aggiornato: v$PVER  targetAbi={target_abi}")
+          print(f"manifest.json updated: v$PVER  targetAbi={target_abi}")
           PYEOF
 
       # ── Commit & push all changes ────────────────────────────────────────
@@ -174,7 +174,7 @@ jobs:
             Jellyfin.Plugin.ActorsIndex/Jellyfin.Plugin.ActorsIndex.csproj \
             Jellyfin.Plugin.ActorsIndex/meta.json \
             manifest.json
-          git commit -m "Auto-release v${{ steps.newver.outputs.version }} per Jellyfin ${{ steps.versions.outputs.jellyfin }}"
+          git commit -m "Auto-release v${{ steps.newver.outputs.version }} for Jellyfin ${{ steps.versions.outputs.jellyfin }}"
           git push
 
       # ── GitHub Release ───────────────────────────────────────────────────
@@ -185,7 +185,7 @@ jobs:
         run: |
           PVER="${{ steps.newver.outputs.version }}"
           JVER="${{ steps.versions.outputs.jellyfin }}"
-          NOTES="Release automatica compilata per Jellyfin **${JVER}**.\n\nInstallabile direttamente dalla pagina impostazioni del plugin → *Aggiornamento Plugin* → **Controlla aggiornamenti**."
+          NOTES="Automated build for Jellyfin **${JVER}**.\n\nInstallable straight from the plugin settings page → *Plugin Update* → **Check for updates**."
           gh release create "v${PVER}" "${{ steps.package.outputs.zip }}" \
             --title "v${PVER} — Jellyfin ${JVER}" \
             --notes "${NOTES}" \

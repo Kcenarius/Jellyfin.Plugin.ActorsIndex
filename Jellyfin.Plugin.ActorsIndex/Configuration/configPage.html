@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Actors Index</title>
     <style>
-        /* â”€â”€ Layout helpers â”€â”€ */
+        /* -- Layout helpers -- */
         .ai-section          { margin-top: 2em; }
         .ai-status           { margin-top: 1em; font-style: italic; }
 
-        /* â”€â”€ Actors-browse link styled as button â”€â”€ */
+        /* -- Actors-browse link styled as button -- */
         .ai-browse-link      { display: inline-flex; align-items: center; gap: 8px;
                                text-decoration: none; margin-bottom: 12px; }
         .ai-load-btn         { margin-left: 8px; }
         .ai-hidden-btn       { display: none; }
 
-        /* â”€â”€ Actors table â”€â”€ */
+        /* -- Actors table -- */
         .ai-table-wrap       { margin-top: 1em; overflow-x: auto; }
         .ai-table-wrap.ai-hidden { display: none; }
         .ai-table            { width: 100%; border-collapse: collapse; font-size: 0.95em; }
@@ -42,26 +42,26 @@
                     </div>
 
                     <div class="verticalSection">
-                        <p>Configurazione del plugin Actors Index.</p>
+                        <p>Actors Index plugin configuration.</p>
                     </div>
 
                     <div class="checkboxContainer checkboxContainer-withDescription">
                         <label>
                             <!-- is="emby-checkbox" is required by the Jellyfin web framework -->
                             <input is="emby-checkbox" type="checkbox" id="Enabled" />
-                            <span>Abilita plugin</span>
+                            <span>Enable plugin</span>
                         </label>
                         <div class="fieldDescription checkboxFieldDescription">
-                            Attiva o disattiva il plugin.
+                            Turn the plugin on or off.
                         </div>
                     </div>
 
                     <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="MinimumAppearances">Numero minimo apparizioni</label>
+                        <label class="inputLabel inputLabelUnfocused" for="MinimumAppearances">Minimum appearances</label>
                         <!-- is="emby-input" is required by the Jellyfin web framework -->
                         <input is="emby-input" type="number" id="MinimumAppearances" min="1" step="1" />
                         <div class="fieldDescription">
-                            Numero minimo di apparizioni richieste per mostrare un attore nell'indice.
+                            Minimum number of appearances required for an actor to be listed in the index.
                         </div>
                     </div>
 
@@ -69,10 +69,10 @@
                         <label>
                             <!-- is="emby-checkbox" is required by the Jellyfin web framework -->
                             <input is="emby-checkbox" type="checkbox" id="ShowRoleName" />
-                            <span>Mostra nome ruolo</span>
+                            <span>Show role name</span>
                         </label>
                         <div class="fieldDescription checkboxFieldDescription">
-                            Mostra anche il ruolo/character name quando disponibile.
+                            Also show the role/character name when available.
                         </div>
                     </div>
 
@@ -84,94 +84,94 @@
                     </div>
                 </form>
 
-                <!-- ===== Strumenti Canale ===== -->
+                <!-- ===== Channel tools ===== -->
                 <div class="verticalSection ai-section">
                     <div class="sectionTitleContainer flex align-items-center">
-                        <h2 class="sectionTitle">Strumenti Canale</h2>
+                        <h2 class="sectionTitle">Channel Tools</h2>
                     </div>
                     <div class="verticalSection">
-                        <p>Elimina tutti gli item del canale dal database e svuota la cache. Jellyfin li ricreerà da zero alla prossima navigazione, usando le immagini aggiornate degli attori.</p>
+                        <p>Deletes all channel items from the database and clears the cache. Jellyfin recreates them from scratch the next time the channel is browsed, using the updated actor images.</p>
                     </div>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="RefreshChannelBtn" class="raised emby-button">
-                        <span>&#128260; Aggiorna metadati canale</span>
+                        <span>&#128260; Refresh channel metadata</span>
                     </button>
                     <div id="RefreshChannelStatus" class="ai-status"></div>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="RefreshPeopleBtn" class="raised emby-button ai-load-btn">
-                        <span>&#128247; Aggiorna immagini attori</span>
+                        <span>&#128247; Refresh actor images</span>
                     </button>
                     <div id="RefreshPeopleStatus" class="ai-status"></div>
                 </div>
 
-                <!-- ===== Aggiornamento Plugin ===== -->
+                <!-- ===== Plugin update ===== -->
                 <div class="verticalSection ai-section">
                     <div class="sectionTitleContainer flex align-items-center">
-                        <h2 class="sectionTitle">Aggiornamento Plugin</h2>
+                        <h2 class="sectionTitle">Plugin Update</h2>
                     </div>
                     <div class="verticalSection">
-                        <p>Controlla se è disponibile una versione più recente del plugin (compilata automaticamente ad ogni aggiornamento di Jellyfin). Se presente, scarica e installa in un click.</p>
+                        <p>Check whether a newer version of the plugin is available (built automatically on every Jellyfin update). If there is one, download and install it in one click.</p>
                     </div>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="CheckUpdateBtn" class="raised emby-button">
-                        <span>&#128260; Controlla aggiornamenti</span>
+                        <span>&#128260; Check for updates</span>
                     </button>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="SelfUpdateBtn" class="raised emby-button ai-load-btn ai-hidden-btn">
-                        <span>&#11014; Scarica e installa aggiornamento</span>
+                        <span>&#11014; Download and install update</span>
                     </button>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="RestartAfterUpdateBtn" class="raised emby-button ai-load-btn ai-hidden-btn">
-                        <span>&#128260; Riavvia Jellyfin</span>
+                        <span>&#128260; Restart Jellyfin</span>
                     </button>
                     <div id="UpdateStatus" class="ai-status"></div>
                 </div>
 
-                <!-- ===== Pulsante Home ===== -->
+                <!-- ===== Home button ===== -->
                 <div class="verticalSection ai-section">
                     <div class="sectionTitleContainer flex align-items-center">
-                        <h2 class="sectionTitle">Pulsante nella Home</h2>
+                        <h2 class="sectionTitle">Home Button</h2>
                     </div>
                     <div class="verticalSection">
-                        <p>Aggiunge un pulsante &#127914; fisso su tutte le pagine Jellyfin che apre direttamente l'Indice Attori. Dopo ogni aggiornamento di Jellyfin clicca "Inietta" per ripristinarlo.</p>
+                        <p>Adds a fixed &#127914; button on every Jellyfin page that opens the Actors Index directly. After each Jellyfin update, click "Inject" to restore it.</p>
                     </div>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="InjectUiBtn" class="raised emby-button">
-                        <span>&#127914; Inietta pulsante nella Home</span>
+                        <span>&#127914; Inject button into Home</span>
                     </button>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="RemoveUiBtn" class="raised emby-button ai-load-btn">
-                        <span>&#10006; Rimuovi pulsante dalla Home</span>
+                        <span>&#10006; Remove button from Home</span>
                     </button>
                     <div id="InjectUiStatus" class="ai-status"></div>
                 </div>
 
-                <!-- ===== Actors Index Viewer ===== -->
+                <!-- ===== Actors index viewer ===== -->
                 <div class="verticalSection ai-section">
                     <div class="sectionTitleContainer flex align-items-center">
-                        <h2 class="sectionTitle">Indice Attori</h2>
+                        <h2 class="sectionTitle">Actors Index</h2>
                     </div>
                     <div class="verticalSection">
-                        <p>Visualizza tutti gli attori presenti nella libreria con il conteggio delle apparizioni.</p>
+                        <p>View every actor in the library with their appearance count.</p>
                     </div>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <a href="/web/configurationpage?name=ActorsBrowse"
                        is="emby-button"
                        class="raised emby-button ai-browse-link">
-                        <span>&#127914; Apri pagina Indice Attori</span>
+                        <span>&#127914; Open Actors Index page</span>
                     </a>
                     <!-- is="emby-button" is required by the Jellyfin web framework -->
                     <button is="emby-button" type="button" id="LoadActorsIndexBtn" class="raised emby-button ai-load-btn">
-                        <span>Carica Indice Attori (qui sotto)</span>
+                        <span>Load Actors Index (below)</span>
                     </button>
                     <div id="ActorsIndexStatus" class="ai-status"></div>
                     <div id="ActorsIndexTableContainer" class="ai-table-wrap ai-hidden">
                         <table class="ai-table">
                             <thead>
                                 <tr>
-                                    <th class="ai-th">Attore</th>
-                                    <th class="ai-th ai-th--center">Apparizioni</th>
-                                    <th class="ai-th">Titoli</th>
+                                    <th class="ai-th">Actor</th>
+                                    <th class="ai-th ai-th--center">Appearances</th>
+                                    <th class="ai-th">Titles</th>
                                 </tr>
                             </thead>
                             <tbody id="ActorsIndexTableBody"></tbody>
@@ -218,7 +218,7 @@
                 btn.disabled = true;
                 installBtn.classList.add('ai-hidden-btn');
                 restartBtn.classList.add('ai-hidden-btn');
-                statusEl.textContent = 'Controllo in corso\u2026';
+                statusEl.textContent = 'Checking\u2026';
 
                 fetch(ApiClient.getUrl('ActorsIndex/check-update'), {
                     headers: { 'X-Emby-Authorization': 'MediaBrowser Token="' + ApiClient.accessToken() + '"' }
@@ -226,17 +226,17 @@
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
                     if (data.error) {
-                        statusEl.textContent = '\u2716 Errore: ' + data.error;
+                        statusEl.textContent = '\u2716 Error: ' + data.error;
                     } else if (data.updateAvailable) {
-                        statusEl.textContent = '\u2B06 Disponibile v' + data.latestVersion + ' (attuale: v' + data.currentVersion + ')';
+                        statusEl.textContent = '\u2B06 Update available: v' + data.latestVersion + ' (current: v' + data.currentVersion + ')';
                         installBtn.classList.remove('ai-hidden-btn');
                     } else {
-                        statusEl.textContent = '\u2714 Plugin gi\u00e0 aggiornato (v' + data.currentVersion + ')';
+                        statusEl.textContent = '\u2714 Plugin is already up to date (v' + data.currentVersion + ')';
                     }
                     btn.disabled = false;
                 })
                 .catch(function (err) {
-                    statusEl.textContent = '\u2716 Errore di rete: ' + (err && err.message ? err.message : String(err));
+                    statusEl.textContent = '\u2716 Network error: ' + (err && err.message ? err.message : String(err));
                     btn.disabled = false;
                 });
             });
@@ -247,7 +247,7 @@
                 var restartBtn = document.getElementById('RestartAfterUpdateBtn');
 
                 btn.disabled = true;
-                statusEl.textContent = 'Download e installazione in corso\u2026';
+                statusEl.textContent = 'Downloading and installing\u2026';
 
                 fetch(ApiClient.getUrl('ActorsIndex/self-update'), {
                     method: 'POST',
@@ -264,16 +264,16 @@
                 .then(function (result) {
                     var data = result.data;
                     if (data === null) {
-                        statusEl.textContent = '\u2716 HTTP ' + result.httpStatus + ' \u2014 risposta non valida: ' + result.rawBody.substring(0, 200);
+                        statusEl.textContent = '\u2716 HTTP ' + result.httpStatus + ' \u2014 invalid response: ' + result.rawBody.substring(0, 200);
                         btn.disabled = false;
                         return;
                     }
                     if (data.status === 'updated') {
-                        statusEl.textContent = '\u2714 Aggiornato a v' + data.newVersion + '. Riavvia Jellyfin per completare.';
+                        statusEl.textContent = '\u2714 Updated to v' + data.newVersion + '. Restart Jellyfin to finish.';
                         btn.classList.add('ai-hidden-btn');
                         restartBtn.classList.remove('ai-hidden-btn');
                     } else if (data.status === 'up_to_date') {
-                        statusEl.textContent = '\u2714 Plugin gi\u00e0 aggiornato (v' + data.version + ')';
+                        statusEl.textContent = '\u2714 Plugin is already up to date (v' + data.version + ')';
                         btn.disabled = false;
                     } else {
                         statusEl.textContent = '\u2716 HTTP ' + result.httpStatus + ' \u2014 ' + (data.error || JSON.stringify(data));
@@ -281,7 +281,7 @@
                     }
                 })
                 .catch(function (err) {
-                    statusEl.textContent = '\u2716 Errore: ' + (err && err.message ? err.message : String(err));
+                    statusEl.textContent = '\u2716 Error: ' + (err && err.message ? err.message : String(err));
                     btn.disabled = false;
                 });
             });
@@ -290,18 +290,18 @@
                 var btn = this;
                 var statusEl = document.getElementById('UpdateStatus');
                 btn.disabled = true;
-                statusEl.textContent = 'Riavvio Jellyfin in corso\u2026';
+                statusEl.textContent = 'Restarting Jellyfin\u2026';
 
                 fetch(ApiClient.getUrl('System/Restart'), {
                     method: 'POST',
                     headers: { 'X-Emby-Authorization': 'MediaBrowser Token="' + ApiClient.accessToken() + '"' }
                 })
                 .then(function () {
-                    statusEl.textContent = '\u2714 Riavvio avviato. Attendi qualche secondo e ricarica la pagina.';
+                    statusEl.textContent = '\u2714 Restart started. Wait a few seconds and reload the page.';
                 })
                 .catch(function () {
-                    // Server chiude la connessione durante il riavvio — è normale
-                    statusEl.textContent = '\u2714 Riavvio avviato. Attendi qualche secondo e ricarica la pagina.';
+                    // The server closes the connection during the restart - this is expected
+                    statusEl.textContent = '\u2714 Restart started. Wait a few seconds and reload the page.';
                 });
             });
 
@@ -309,7 +309,7 @@
                 var btn = this;
                 var statusEl = document.getElementById('InjectUiStatus');
                 btn.disabled = true;
-                statusEl.textContent = 'Operazione in corso\u2026';
+                statusEl.textContent = 'Working\u2026';
 
                 fetch(ApiClient.getUrl('ActorsIndex/inject-ui'), {
                     method: 'POST',
@@ -326,21 +326,21 @@
                 .then(function (result) {
                     var data = result.data;
                     if (data === null) {
-                        statusEl.textContent = '\u2716 HTTP ' + result.httpStatus + ' \u2014 Risposta non JSON. Plugin non caricato o endpoint non trovato. Body: ' + result.rawBody.substring(0, 200);
+                        statusEl.textContent = '\u2716 HTTP ' + result.httpStatus + ' \u2014 Non-JSON response. Plugin not loaded or endpoint not found. Body: ' + result.rawBody.substring(0, 200);
                         btn.disabled = false;
                         return;
                     }
                     if (data.status === 'ok') {
-                        statusEl.textContent = '\u2714 Pulsante iniettato in ' + data.path + '. Ricarica Jellyfin per vederlo.';
+                        statusEl.textContent = '\u2714 Button injected into ' + data.path + '. Reload Jellyfin to see it.';
                     } else if (data.status === 'already_injected') {
-                        statusEl.textContent = '\u2714 Pulsante gi\u00e0 presente in ' + data.path + '.';
+                        statusEl.textContent = '\u2714 Button already present in ' + data.path + '.';
                     } else {
                         statusEl.textContent = '\u2716 HTTP ' + result.httpStatus + ' \u2014 ' + (data.error || JSON.stringify(data));
                     }
                     btn.disabled = false;
                 })
                 .catch(function (err) {
-                    statusEl.textContent = '\u2716 Errore di rete: ' + (err && err.message ? err.message : String(err));
+                    statusEl.textContent = '\u2716 Network error: ' + (err && err.message ? err.message : String(err));
                     btn.disabled = false;
                 });
             });
@@ -349,7 +349,7 @@
                 var btn = this;
                 var statusEl = document.getElementById('InjectUiStatus');
                 btn.disabled = true;
-                statusEl.textContent = 'Rimozione in corso\u2026';
+                statusEl.textContent = 'Removing\u2026';
 
                 fetch(ApiClient.getUrl('ActorsIndex/remove-ui'), {
                     method: 'POST',
@@ -358,16 +358,16 @@
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
                     if (data.status === 'ok') {
-                        statusEl.textContent = '\u2714 Pulsante rimosso da ' + data.path + '. Ricarica per confermare.';
+                        statusEl.textContent = '\u2714 Button removed from ' + data.path + '. Reload to confirm.';
                     } else if (data.status === 'not_injected') {
-                        statusEl.textContent = '\u2714 Pulsante non presente, nulla da rimuovere.';
+                        statusEl.textContent = '\u2714 Button not present, nothing to remove.';
                     } else {
                         statusEl.textContent = '\u2716 ' + (data.error || JSON.stringify(data));
                     }
                     btn.disabled = false;
                 })
                 .catch(function () {
-                    statusEl.textContent = '\u2716 Errore. Controlla la console del browser.';
+                    statusEl.textContent = '\u2716 Error. Check the browser console.';
                     btn.disabled = false;
                 });
             });
@@ -376,7 +376,7 @@
                 var btn = this;
                 var statusEl = document.getElementById('RefreshChannelStatus');
                 btn.disabled = true;
-                statusEl.textContent = 'Operazione in corso\u2026';
+                statusEl.textContent = 'Working\u2026';
 
                 fetch(ApiClient.getUrl('ActorsIndex/refresh-channel'), {
                     method: 'POST',
@@ -385,13 +385,13 @@
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
                     statusEl.textContent =
-                        '\u2714 Item eliminati dal DB: ' + data.itemsDeleted +
-                        ' \u2014 Cache svuotata: ' + (data.cacheCleared ? 's\u00ec' : 'no') +
-                        '. Alla prossima navigazione del canale gli item vengono ricreati da zero.';
+                        '\u2714 Items deleted from the DB: ' + data.itemsDeleted +
+                        ' \u2014 Cache cleared: ' + (data.cacheCleared ? 'yes' : 'no') +
+                        '. The items are recreated from scratch the next time the channel is browsed.';
                     btn.disabled = false;
                 })
                 .catch(function () {
-                    statusEl.textContent = '\u2716 Errore durante il refresh. Controlla la console del browser.';
+                    statusEl.textContent = '\u2716 Refresh failed. Check the browser console.';
                     btn.disabled = false;
                 });
             });
@@ -400,7 +400,7 @@
                 var btn = this;
                 var statusEl = document.getElementById('RefreshPeopleStatus');
                 btn.disabled = true;
-                statusEl.textContent = 'Operazione in corso\u2026';
+                statusEl.textContent = 'Working\u2026';
 
                 fetch(ApiClient.getUrl('ActorsIndex/refresh-people'), {
                     method: 'POST',
@@ -409,12 +409,12 @@
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
                     statusEl.textContent =
-                        '\u2714 ' + data.peopleQueued + ' attori in coda per aggiornamento immagini.' +
-                        ' Attendi qualche minuto e ricarica la pagina Indice Attori.';
+                        '\u2714 ' + data.peopleQueued + ' actors queued for an image refresh.' +
+                        ' Wait a few minutes and reload the Actors Index page.';
                     btn.disabled = false;
                 })
                 .catch(function () {
-                    statusEl.textContent = '\u2716 Errore. Controlla la console del browser.';
+                    statusEl.textContent = '\u2716 Error. Check the browser console.';
                     btn.disabled = false;
                 });
             });
@@ -432,7 +432,7 @@
                         .replace(/"/g, '&quot;');
                 }
 
-                statusEl.textContent = 'Caricamento in corso\u2026';
+                statusEl.textContent = 'Loading\u2026';
                 tableContainer.classList.add('ai-hidden');
                 tableBody.innerHTML = '';
 
@@ -441,7 +441,7 @@
                     type: 'GET',
                     dataType: 'json'
                 }).then(function (result) {
-                    statusEl.textContent = 'Trovati ' + result.totalActors + ' attori.';
+                    statusEl.textContent = 'Found ' + result.totalActors + ' actors.';
 
                     var maxItems = 6;
                     result.actors.forEach(function (actor) {
@@ -453,7 +453,7 @@
                         }).join(', ');
 
                         if (actor.items.length > maxItems) {
-                            titlesHtml += '&nbsp;<em>\u2026 e altri ' + (actor.items.length - maxItems) + '</em>';
+                            titlesHtml += '&nbsp;<em>\u2026 and ' + (actor.items.length - maxItems) + ' more</em>';
                         }
 
                         var row = document.createElement('tr');
@@ -466,7 +466,7 @@
 
                     tableContainer.classList.remove('ai-hidden');
                 }).catch(function (err) {
-                    statusEl.textContent = 'Errore nel caricamento. Controlla la console del browser.';
+                    statusEl.textContent = 'Loading failed. Check the browser console.';
                     console.error('ActorsIndex error:', err);
                 });
             });
